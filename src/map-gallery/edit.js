@@ -1,38 +1,61 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
+import { InspectorControls, useBlockProps } from "@wordpress/block-editor";
+import { PanelBody, NumberControl, RangeControl } from "@wordpress/components";
 
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from '@wordpress/block-editor';
+export default function Edit({ attributes, setAttributes }){
+	const {
+		hoverGrowScale,
+		mapHeight,
+		mapWidth,
+		imgIconInitialHeight,
+		imgIconInitialWidth,
+	} = attributes;
 
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './editor.scss';
+	const blockProps = useBlockProps({
+		style: {
+			'--hover-grow-scale': hoverGrowScale,
+			'--map-height': mapHeight,
+			'--map-width': mapWidth,
+			'--img-icon-initial-height': imgIconInitialHeight,
+			'--img-icon-initial-width': imgIconInitialWidth,
+		}, });
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
-export default function Edit() {
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Map Gallery – hello from the editor!', 'map-gallery' ) }
-		</p>
+		<>
+			<InspectorControls>
+				<PanelBody title={__('Settings', 'Map Gallery')}>
+					<RangeControl
+						label={__('Hover Grow Scale', 'Map Gallery')}
+						value={hoverGrowScale}
+						onChange={(val) => setAttributes({ hoverGrowScale: val })}
+						min={0.5}
+						max={2}
+					/>
+					<NumberControl
+						label={__('Map Height', 'Map Gallery')}
+						value={mapHeight}
+						onChange={(val) => setAttributes({ mapHeight: val })}
+					/>
+					<NumberControl
+						label={__('Map Width', 'Map Gallery')}
+						value={mapWidth}
+						onChange={(val) => setAttributes({ galleryColumns: val })}
+					/>
+					<NumberControl
+						label={__('Map Icon Image Height', 'Map Gallery')}
+						value={galleryColumns}
+						onChange={(val) => setAttributes({ galleryColumns: val })}
+					/>
+					<NumberControl
+						label={__('Map Icon Image Width', 'Map Gallery')}
+						value={galleryColumns}
+						onChange={(val) => setAttributes({ galleryColumns: val })}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div {...blockProps}>
+				<p>{__('Preview (images load on frontend)', 'Map Gallery')}</p>
+			</div>
+		</>
 	);
 }

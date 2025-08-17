@@ -1,20 +1,45 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "create-block/map-gallery",
+  "name": "map-gallery/map-gallery",
   "version": "0.1.0",
   "title": "Map Gallery",
   "category": "widgets",
-  "icon": "smiley",
-  "description": "Example block scaffolded with Create Block tool.",
+  "description": "Map Gallery Widget that displays images on map using geolocation data.",
   "example": {},
+  "attributes": {
+    "hoverGrowScale": {
+      "type": "number",
+      "default": 1.1
+    },
+    "mapHeight": {
+      "type": "number",
+      "default": 500
+    },
+    "mapWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "imgIconInitialHeight": {
+      "type": "number",
+      "default": 20
+    },
+    "imgIconInitialWidth": {
+      "type": "number",
+      "default": 10
+    }
+  },
   "supports": {
-    "html": false
+    "color": {
+      "background": false,
+      "text": true
+    },
+    "html": false,
+    "typography": {
+      "fontSize": true
+    }
   },
   "textdomain": "map-gallery",
   "editorScript": "file:./index.js",
-  "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css",
-  "render": "file:./render.php",
-  "viewScript": "file:./view.js"
+  "render": "file:./render.php"
 }
